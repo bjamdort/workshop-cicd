@@ -11,6 +11,9 @@ pipeline {
                 dir('code/frontend') {
                     sh 'npm install'
                 }
+                dir('code/backend') {
+                    sh 'npm install'   
+                }
             }
         }
         stage('Build') {
@@ -21,6 +24,9 @@ pipeline {
                 dir('code/frontend') {
                     sh 'npm run build'   
                 }
+                dir('code/backend') {
+                    sh 'npm run build'   
+                }
             }
         }
         stage('Static Analysis') {
@@ -28,8 +34,12 @@ pipeline {
                 docker { image 'node:alpine' }
             }
             steps {
-                echo 'Analyze'
-                // sh 'npm run lint'
+                dir('code/frontend') {
+                    sh 'npm run lint'   
+                }
+                dir('code/backend') {
+                    sh 'npm run lint'   
+                }
             }
         }
         stage('Unit Test') {
@@ -37,8 +47,12 @@ pipeline {
                 docker { image 'node:alpine' }
             }
             steps {
-                echo 'Test'
-                // sh 'npm run test'
+                dir('code/frontend') {
+                    sh 'npm run test'   
+                }
+                dir('code/frontend') {
+                    sh 'npm run test'   
+                }
             }
         }
         stage('e2e Test') {
