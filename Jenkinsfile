@@ -8,7 +8,9 @@ pipeline {
                 docker { image 'node:alpine' }
             }
             steps {
-                sh 'npm install'
+                dir('code/frontend') {
+                    sh 'npm install'
+                }
             }
         }
         stage('Build') {
@@ -16,7 +18,9 @@ pipeline {
                 docker { image 'node:alpine' }
             }
             steps {
-                sh 'npm run build'   
+                dir('code/frontend') {
+                    sh 'npm run build'   
+                }
             }
         }
         stage('Static Analysis') {
